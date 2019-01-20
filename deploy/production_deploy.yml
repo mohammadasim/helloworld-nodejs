@@ -16,7 +16,7 @@
     
     - name: Set server hosts file
       lineinfile:
-        path: /etc/host
+        path: /etc/hosts
         regexp: '^127\.0\.0\.1'
         line: '127.0.0.1 app_server'
         owner: root
@@ -35,7 +35,7 @@
         groups: app
         append: yes
         home: yes
-        
+
 
 
 
