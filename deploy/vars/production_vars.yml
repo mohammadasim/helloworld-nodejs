@@ -1,1 +1,21 @@
 user_name: app
+packages:
+  - npm
+  - build-essential
+  - nodejs-legacy
+
+app_files:
+  - index-db.js
+  - index.js
+  - package-lock.json
+  - package.json
+
+systemd_scripts:
+  - name: "{{ user_name }}"
+    options:
+      - Type=simple
+      - User={{user_name}}
+      - WorkingDirectory=/home/{{user_name}}
+      - ExecStart=/bin/bash -c "npm start"
+      - Restart=on-failure
+      - RestartSec=6

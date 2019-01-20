@@ -1,0 +1,13 @@
+---
+- name: Create app group
+  group:
+    name: "{{ user_name }}"
+    state: present
+
+- name: Create app user
+  user:
+    name: "{{ user_name }}"
+    shell: /bin/bash
+    groups: "{{ user_name }}"
+    append: yes
+    home: '/home/{{ user_name }}'

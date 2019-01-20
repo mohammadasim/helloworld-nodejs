@@ -1,0 +1,4 @@
+---
+# tasks file for app
+- include_tasks: user.yml
+- include_tasks: setup.yml

@@ -1,0 +1,14 @@
+# {{ ansible_managed }}
+[Unit]
+Description={{ item.name }} Service
+After=network.target
+
+[Service]
+{% if item.options is defined -%}
+{% for option in item.options -%}
+{{ option }}
+{% endfor -%}
+{% endif %}
+
+[Install]
+WantedBy=multi-user.target

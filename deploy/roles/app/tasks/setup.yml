@@ -1,0 +1,13 @@
+---
+- name: Set the server hostname
+  hostname:
+    name: app_server
+    
+- name: Set server hosts file
+  lineinfile:
+    path: /etc/hosts
+    regexp: '^127\.0\.0\.1'
+    line: '127.0.0.1 app_server'
+    owner: root
+    group: root
+    mode: 0644
