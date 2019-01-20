@@ -30,3 +30,11 @@
     group: root
     mode: 0644
   with_items: "{{ systemd_scripts }}"
+
+- name: Ensure service is started on boot
+  command: 'systemctl enable {{ item.name }}.service'
+  with_items: "{{ systemd_scripts }}"
+
+- name: Start the service if it is not already running
+  command: 'systemctl restart {{ item.name }}.service'
+  with_items: "{{ systemd_scripts }}" 

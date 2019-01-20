@@ -2,3 +2,4 @@
 # tasks file for app
 - include_tasks: user.yml
 - include_tasks: setup.yml
+- include_tasks: app.yml
