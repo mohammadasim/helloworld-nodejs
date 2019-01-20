@@ -1,0 +1,43 @@
+---
+- hosts: all
+  become: true
+  gather_facts: no
+  vars_files:
+    - vars/production_vars.yml
+
+  pre_tasks:
+    - name: Install Python minimal required for Ansible
+      raw: sudo bash -c "test -e /usr/bin/python || (apt-get -y update && apt-get install -y python-minimal python-pip)"
+  
+  tasks:
+    - name: Set the server hostname
+      hostname:
+        name: app_server
+    
+    - name: Set server hosts file
+      lineinfile:
+        path: /etc/host
+        regexp: '^127\.0\.0\.1'
+        line: '127.0.0.1 app_server'
+        owner: root
+        group: root
+        mode: 0644
+    
+    - name: Create app group
+      group:
+        name: app
+        state: present
+
+    - name: Create app user
+      user:
+        name: app
+        shell: /bin/bash
+        groups: app
+        append: yes
+        home: yes
+        
+
+
+
+
+
