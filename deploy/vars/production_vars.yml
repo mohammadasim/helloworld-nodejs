@@ -1,3 +1,9 @@
+hostname_name: "app.kops.theayubs.co.uk"
+nginx_ssl: "enabled"
+nginx_ssl_domain: "kops.theayubs.co.uk"
+nginx_server_name: "{{ hostname_name }}"
+
+
 user_name: app
 packages:
   - npm

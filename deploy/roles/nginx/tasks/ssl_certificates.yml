@@ -1,0 +1,27 @@
+---
+- name: Check DHParams directory exists
+  file: path="{{ ssl_dhparams_location }}" state=directory owner=root group=root mode=0755
+  when:
+    - nginx_ssl_domain | default("") != ""
+    - ssl_dhparams_location is defined
+
+- name: Check for existing DH Params file
+  stat: path="{{ ssl_dhparams_location }}/dhparams.pem"
+  register: dhparams_file
+  when:
+    - nginx_ssl_domain | default("") != ""
+    - ssl_dhparams_location is defined
+
+- name: Create DH Params
+  command: openssl dhparam -out {{ ssl_dhparams_location }}/dhparams.pem 2048
+  when:
+    - nginx_ssl_domain | default("") != ""
+    - ssl_dhparams_location is defined
+    - dhparams_file.stat.exists == false
+
+- name: Check cert directory exists
+  file: path="{{ ssl_cert_location }}" state=directory owner=root group=root mode=0755
+  when:
+    - nginx_ssl_domain | default("") != ""
+    - ssl_cert_location is defined
+

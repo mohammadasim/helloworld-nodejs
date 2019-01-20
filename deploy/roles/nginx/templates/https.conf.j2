@@ -1,0 +1,28 @@
+#{{ ansible_managed }}
+server {
+   listen 443 ssl;
+   server_name {{nginx_server_name}};
+   client_max_body_size 4G;
+   access_log {{logs_path}}/nginx-access.log;
+   error_log {{logs_path}}/nginx-error.log;
+   location / { proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+   proxy_set_header Host $http_host;
+   proxy_redirect off;
+   proxy_read_timeout 300;
+   proxy_connect_timeout 300;
+   include uwsgi_params;
+   set_by_lua $correlation_id '
+   if(ngx.var.http_correlation_id == nil or ngx.var.http_correlation_id == "")
+   then
+   return string.format("%010d", math.random(0, 10000000000))
+   else
+   return ngx.var.http_correlation_id
+   end
+   ';
+   uwsgi_param HTTP_CORRELATION_ID $correlation_id;
+   if (!-f $request_filename) {
+   uwsgi_pass imag-identification;
+   break;
+   }
+   }
+}

@@ -1,0 +1,20 @@
+---
+
+nginx_env:
+ RUNLEVEL: 1
+
+nginx_installation_types_using_service: ["packages", "configuration-only"]
+
+nginx_is_el: "{{ ansible_distribution in ['RedHat', 'CentOS'] }}"
+
+ssl_cert_location: /etc/ssl/certs
+ssl_key_location: /etc/ssl/private
+ssl_dhparams_location: /etc/ssl
+
+# nginx_ssl_domain: pt.imagination.net
+
+ssl_file_cert: "{{nginx_ssl_domain}}.crt"
+ssl_file_key: "{{nginx_ssl_domain}}.key"
+
+ssl_certificates:
+  - { cert: "files/ssl/{{nginx_ssl_domain}}/{{nginx_ssl_domain}}.crt", key: "files/ssl/{{nginx_ssl_domain}}/{{nginx_ssl_domain}}.key" }

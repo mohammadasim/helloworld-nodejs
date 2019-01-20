@@ -1,0 +1,11 @@
+#{{ ansible_managed }}
+server {
+   listen 80;
+   server_name {{nginx_server_name}};
+   access_log {{logs_path}}/nginx-access.log;
+   error_log {{logs_path}}/nginx-error.log;
+   client_max_body_size 4G;
+   location / {
+   rewrite ^/(.*)$ https://$host/$1 redirect;
+   }
+}

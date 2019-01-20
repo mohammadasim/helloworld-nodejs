@@ -1,0 +1,15 @@
+---
+- include: nginx-official-repo.yml
+  when: nginx_official_repo == True
+- include: installation.packages.yml
+  when: nginx_installation_type == "packages"
+
+- include: ssl_certificates.yml
+  when: nginx_ssl_domain | default("") != "" and nginx_ssl == "enabled"
+
+- include: configuration.yml
+
+- name: Start the nginx service
+  service: name={{ nginx_service_name }} state=started enabled=yes
+  when: nginx_installation_type in nginx_installation_types_using_service and nginx_daemon_mode == "on"
+  tags: [service,nginx]

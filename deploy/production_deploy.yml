@@ -4,6 +4,7 @@
   gather_facts: no
   vars_files:
     - vars/production_vars.yml
+    - vars/nginx_ssl_vars.yml
 
   pre_tasks:
     - name: Install Python minimal required for Ansible
@@ -11,6 +12,7 @@
   
   roles:
     - app
+    - nginx
     
     
     
