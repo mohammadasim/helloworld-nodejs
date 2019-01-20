@@ -34,7 +34,7 @@
         shell: /bin/bash
         groups: app
         append: yes
-        home: yes
+        home: /home/app
 
 
 
