@@ -12,6 +12,16 @@
   
   roles:
     - app
+    
+  
+- hosts: all
+  become: true
+  gather_facts: yes
+  vars_files:
+    - vars/production_vars.yml
+    - vars/nginx_ssl_vars.yml
+  
+  roles:
     - nginx
     
     
