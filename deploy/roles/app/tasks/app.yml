@@ -22,6 +22,9 @@
     path: '/home/{{ user_name }}'
     state: present
 
+- name: Change the ownership of all the files
+  command: 'chown -R {{ user_name }}:{{ user_name }} /home/{{ user_name }}'
+
 - name: Copy systemd script
   template:
     src: systemd.j2
